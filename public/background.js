@@ -1,14 +1,21 @@
-const checkTime = () => {
+const canAccess = () => {
     var today = new Date();
     var hours = today.getHours();
-    console.log(hours)
     return (hours <= 23 && hours >= 18) ? true : false;
 };
-console.log('getting somewhere')
-chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-    console.log('here')
-    const url = tabs[0].url;
-    if (url.includes("youtube") && checkTime()) {
-        chrome.tabs.sendMessage(tabs[0].id, {type: 'block'});
+
+chrome.tabs.query({url: "*://*.youtube.com/*"}, tabs => {
+    console.log("tabs: ", tabs.length);
+    if (tabs.length === 0) return;
+    console.log(typeof tabs)
+    
+    
+    if (canAccess()) {
+        var i;
+        for (i = 0; i < tabs.length; i++) {
+            console.log(tabs[i].url)
+            console.log(tabs[i].id)
+            chrome.tabs.sendMessage(tabs[i].id, {type: 'block'});
+        };
     }
 });
