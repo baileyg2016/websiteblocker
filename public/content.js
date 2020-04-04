@@ -1,4 +1,3 @@
-console.log("got here")
 chrome.runtime.onMessage.addListener(req => {
     console.log('Received message');
     if (req.type === 'block') {
