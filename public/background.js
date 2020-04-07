@@ -41,5 +41,7 @@ chrome.tabs.query({url: "*://*/*"}, tabs => {
 });
 
 chrome.tabs.onUpdated.addListener((id, changedInfo, tab) => {
-    chrome.tabs.sendMessage(id, {type: "block"});
+    if(tab.url.includes("youtube") && canAccess()) {
+      chrome.tabs.sendMessage(id, {type: "block"});
+    }
 });
