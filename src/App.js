@@ -6,8 +6,10 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <CountDown />
+      <div style={{margin: "auto"}}>
+        <div>
+          <CountDown />
+        </div>
       </div>
     );
   }
