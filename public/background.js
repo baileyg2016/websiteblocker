@@ -1,7 +1,8 @@
 const canAccess = () => {
     var today = new Date();
     var hours = today.getHours();
-    return (hours <= 23 && hours >= 18) ? true : false;
+    var minutes = today.getMinutes();
+    return (hours >= 18 && (hours !== 23 && minutes !== 59)) ? true : false;
 };
 
 function ensureSendMessage(tabId, message/*, callback*/){
@@ -23,25 +24,25 @@ function ensureSendMessage(tabId, message/*, callback*/){
 
 // "*://*.youtube.com/*"
 
-chrome.tabs.query({url: "*://*/*"}, tabs => {
-    console.log("tabs: ", tabs.length);
-    if (tabs.length === 0) return;
-    console.log(typeof tabs)
-    console.log(tabs)
+// chrome.tabs.query({url: "*://*/*"}, tabs => {
+//     console.log("tabs: ", tabs.length);
+//     if (tabs.length === 0) return;
+//     console.log(typeof tabs)
+//     console.log(tabs)
     
-    if (canAccess()) {
-        console.log("cannot access")
-        let i;
-        for (i = 0; i < tabs.length; i++) {
-            // chrome.tabs.onUpdate.addListener((tabs[i].id, {url: "*://*.youtube.com/*"}) => {
-            //     chrome.tabs.sendMessage(tabs[i].id, {type: "block"})
-            // });
-        };
-    }
-});
+//     if (!canAccess()) {
+//         console.log("cannot access")
+//         let i;
+//         for (i = 0; i < tabs.length; i++) {
+//             // chrome.tabs.onUpdate.addListener((tabs[i].id, {url: "*://*.youtube.com/*"}) => {
+//             //     chrome.tabs.sendMessage(tabs[i].id, {type: "block"})
+//             // });
+//         };
+//     }
+// });
 
 chrome.tabs.onUpdated.addListener((id, changedInfo, tab) => {
-    if(tab.url.includes("youtube") && canAccess()) {
+    if(tab.url.includes("youtube") && !canAccess()) {
       chrome.tabs.sendMessage(id, {type: "block"});
     }
 });

@@ -7,9 +7,12 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "flipdown": "^0.2.2",
+    "loaders.css": "^0.1.2",
     "moment": "^2.24.0",
     "react": "^16.13.1",
+    "react-countdown-circle-timer": "^1.2.1",
     "react-dom": "^16.13.1",
+    "react-loaders": "^3.0.1",
     "react-scripts": "3.4.1",
     "sass": "^1.26.3"
   },
