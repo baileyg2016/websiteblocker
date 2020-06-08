@@ -2,7 +2,7 @@ const canAccess = () => {
     var today = new Date();
     var hours = today.getHours();
     var minutes = today.getMinutes();
-    return (hours >= 18 && (hours !== 23 && minutes !== 59)) ? true : false;
+    return (hours >= 18) ? true : false;
 };
 
 function ensureSendMessage(tabId, message/*, callback*/){
@@ -42,7 +42,7 @@ function ensureSendMessage(tabId, message/*, callback*/){
 // });
 
 chrome.tabs.onUpdated.addListener((id, changedInfo, tab) => {
-    if(tab.url.includes("youtube") && !canAccess()) {
+    if((tab.url.includes("youtube") || tab.url.includes("instagram")) && !canAccess()) {
       chrome.tabs.sendMessage(id, {type: "block"});
     }
 });
