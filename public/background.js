@@ -42,7 +42,7 @@ function ensureSendMessage(tabId, message/*, callback*/){
 // });
 
 chrome.tabs.onUpdated.addListener((id, changedInfo, tab) => {
-    if((tab.url.includes("youtube") || tab.url.includes("instagram")) && !canAccess()) {
+    if((tab.url.includes("youtube") || tab.url.includes("instagram")) && tab.url.includes("chess") && !canAccess()) {
       chrome.tabs.sendMessage(id, {type: "block"});
     }
 });
