@@ -1,4 +1,4 @@
-chrome.runtime.onMessage.addListener(req => {
+chrome.runtime.onMessageExternal.addListener(req => {
     console.log('Received message');
     if (req.type === 'block') {
         console.log("blocking")

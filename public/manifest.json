@@ -1,6 +1,6 @@
 {
   "name": "No Destractions",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "version": "1.0.0",
   "description": "Allows you to limit the amount of time you can access sites",
   "content_scripts": [{
@@ -8,9 +8,7 @@
     "matches": [ "<all_urls>"]
    }],
   "background": {
-    "scripts": ["background.js"]
+    "service_worker": "background.js"
    },
-   "permissions": ["tabs"],
-   "web_accessible_resources" : ["*.html"],
-    "content_security_policy": "script-src 'self' 'sha256-5mldkM4X2PsMnep3q9BPCC6REmZBClfc9yIf3ZKdp9o='; object-src 'self'"
+   "permissions": ["tabs", "nativeMessaging"]
 }

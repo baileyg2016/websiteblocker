@@ -2,9 +2,9 @@ const canAccess = () => {
     var today = new Date();
     var hours = today.getHours();
     var minutes = today.getMinutes();
-    return (hours >= 18) ? true : false;
+    return (hours <= 18) ? true : false;
 };
-
+console.log("i am here")
 function ensureSendMessage(tabId, message/*, callback*/){
     chrome.tabs.sendMessage(tabId, {ping: true}, function(response){
       if(response && response.pong) { // Content script ready
@@ -22,7 +22,7 @@ function ensureSendMessage(tabId, message/*, callback*/){
     });
 }
 
-// "*://*.youtube.com/*"
+// "*://*.youtube/*"
 
 // chrome.tabs.query({url: "*://*/*"}, tabs => {
 //     console.log("tabs: ", tabs.length);
@@ -34,15 +34,21 @@ function ensureSendMessage(tabId, message/*, callback*/){
 //         console.log("cannot access")
 //         let i;
 //         for (i = 0; i < tabs.length; i++) {
-//             // chrome.tabs.onUpdate.addListener((tabs[i].id, {url: "*://*.youtube.com/*"}) => {
+//             // chrome.tabs.onUpdate.addListener((tabs[i].id, {url: "*://*.youtube/*"}) => {
 //             //     chrome.tabs.sendMessage(tabs[i].id, {type: "block"})
 //             // });
 //         };
 //     }
 // });
 
+const blockList = ["youtube", "facebook", "twitter", "linkedin", "instagram", "chess"];
+
 chrome.tabs.onUpdated.addListener((id, changedInfo, tab) => {
-    if((tab.url.includes("youtube") || tab.url.includes("instagram")) && tab.url.includes("chess") && !canAccess()) {
-      chrome.tabs.sendMessage(id, {type: "block"});
-    }
+  const site = new URL(tab.url).hostname.slice(4, -4);
+
+  if(blockList.includes(site) && !canAccess()) {
+    console.log("definitely hit this")
+    chrome.tabs.sendMessage(id, {type: "block"});
+    console.log("hit this")
+  }
 });
